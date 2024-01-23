@@ -7,7 +7,7 @@ const profileSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    name: { type: String, required: true },
+    name: { type: String },
     location: { type: String },
     currentStyle: { type: String },
     influences: { type: String },

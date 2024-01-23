@@ -13,6 +13,7 @@ function createJWT(user) {
 }
 
 function signup(req, res) {
+  console.log("Request Body:", req.body);
   User.findOne({ email: req.body.email })
   .then(user => {
     if (user) {
