@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-import { User } from '../models/user.js'
-import { Profile } from '../models/profile.js'
+import { User } from '../Models/user.js'
+import { Profile } from '../Models/profile.js'
 
 
 function createJWT(user) {

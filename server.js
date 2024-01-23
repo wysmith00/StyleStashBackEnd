@@ -32,17 +32,11 @@ import cors from 'cors'
 import express from 'express'
 
 const app = express();
-const PORT = process.env.PORT || 3000
 
-//middleware
-app.use(express.json());
-app.use(cors());
-
-//server port listening on
-app.listen(PORT, function() {
-    console.log(`You are listening on http://localhost:${PORT}`)
+//Routing
+app.get("/", (req, res) => {
+    res.json({ hello: "Joe "});
 });
 
- app.get("/", (req, res) => {
-     res.json({ hello: "Joe "});
- });
+// Start Server
+app.listen(process.env.PORT ) 
