@@ -35,7 +35,7 @@ const app = express();
 
 //Routing
 app.get("/", (req, res) => {
-    res.json({ hello: "Joe "});
+    res.json({ hello: "ken "});
 });
 
 // Start Server

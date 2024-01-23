@@ -1,31 +1,51 @@
-//edit this to reflect item details 
+const Item = require('../Models/itemdetails'); 
 
-// Update a user's closet 
-exports.updateCloset = async (req,res) => {
+// Get an item by ID
+exports.getItem = async (req, res) => {
     try {
-        const item = await Closet.findById(req.params.id);
-        if (!item) return res.status(404).json({ message: "Item not found" });
-
-        const updatedItem = await item.save();
-        res.json(updatedItem);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
+        const item = await Item.findById(req.params.id);
+        if (!item) {
+            return res.status(404).send('Item not found');
+        }
+        res.status(200).json(item);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 };
 
-
-// Delete a user's closet
-exports.deleteCloset = async (req, res) => {
+// Add a new item
+exports.addItem = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.params.closetId);
+        const newItem = new Item(req.body);
+        await newItem.save();
+        res.status(201).json(newItem);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
 
-        if (!closet) {
-            return res.status(404).json({ message: "Closet not found" });
+// Update an item
+exports.updateItem = async (req, res) => {
+    try {
+        const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedItem) {
+            return res.status(404).send('Item not found');
         }
+        res.status(200).json(updatedItem);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
 
-        await closet.remove();
-        res.json({ message: "Deleted Closet" });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+// Delete an item
+exports.deleteItem = async (req, res) => {
+    try {
+        const item = await Item.findByIdAndDelete(req.params.id);
+        if (!item) {
+            return res.status(404).send('Item not found');
+        }
+        res.status(200).send('Item deleted successfully');
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 };
