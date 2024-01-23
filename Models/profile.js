@@ -7,13 +7,13 @@ const profileSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    name: { type: String, required: true },
+    name: { type: String },
     location: { type: String },
     currentStyle: { type: String },
     influences: { type: String },
-    profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Closet' },
+    closet: {type: mongoose.Schema.Types.ObjectId, ref: 'Closet' },
 })
 
 const Profile = mongoose.model('Profile', profileSchema)
 
-export default Profile
+export default Profile 

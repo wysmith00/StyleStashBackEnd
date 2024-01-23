@@ -1,23 +1,14 @@
-const expresss = require('express')
-const router = express.Router();
-const closet = require('../Controllers/closet');
+import express from "express";
+const router = express.Router()
 
-//Create a closet
-router.post('/', closet.createCloset); 
+import { getCloset, createNewCloset, updateCloset, deleteCloset } from "../Controllers/closet"
+//get all closet route
+router.get('/', getCloset)
+//create new closet route
+router.post('/createCloset', createNewCloset)
+//create new closet route
+router.put('/updateCloset/:id', updateCloset)
+//delete closet route 
 
-//Add an item to a closet category 
-router.post('/closetId/items', closet.addItemToClosetCategory);
+router.delete('/deleteCloset/:id', deleteCloset)
 
-//Remove an item from a closet category 
-router.delete('/closetId/items/:itemId', closet.removeItemFromClosetCategory);
-
-//Get a closet
-router.get('/closetId', closet.getCloset);
-
-// Update a closet
-router.patch('/closetId', closet.updateCloset);
-
-// Delete a closet
-router.delete('/closetId', closet.deleteCloset);
-
-module.exports = router;
