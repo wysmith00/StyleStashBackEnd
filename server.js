@@ -22,11 +22,11 @@ app.use(express.json())
 
 // Your custom authentication middleware
 // Make sure it's after body parsing middleware and before your routes
-app.use(decodeUserFromToken);
+//app.use(decodeUserFromToken);
 
 //Use imported routes
-app.use('/closet', closet);
-app.use('/items', itemdetails);
+app.use('/StyleStash/closet', closet);
+app.use('/StyleStash/items', itemdetails);
 app.use('/StyleStash/user', userRouter)
 app.use('/StyleStash/profile', profileRouter)
 
