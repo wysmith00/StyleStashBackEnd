@@ -19,7 +19,8 @@ const closetSchema = new mongoose.Schema({
     items: [{ type: Schema.Types.ObjectId, ref: 'Item' }]
 });
 
-export default mongoose.model('Closet', closetSchema);
+const Closet = mongoose.model('Closet', closetSchema);
 
+export default Closet
 
 

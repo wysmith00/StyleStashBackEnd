@@ -1,42 +1,40 @@
-// import express from 'express'
-// import cors from 'cors'
-// //import './Config/database.js'
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
+import jwt from 'jsonwebtoken'; // Import JWT for the middleware
 
-// //import { router as closetRouter } from './Routes/closet.js'
-// //import { router as profilesRouter } from './Routes/profile.js'
-// //import { router as closetRouter } from './Routes/closet.js'
-
+import './Config/database.js'; // Assuming this sets up your database
 
 
-// //Load env
-// require("dotenv").config();
+import closet from './Routes/closet.js'; // Import closet routes
+import itemdetails from './Routes/itemdetails.js'; //Import itemDetails Routes
 
-// //Import dependencies 
-// const express = require("express")
-
-// //Express 
-// const app = express();
-
-// //Routing
-// app.get("/", (req, res) => {
-//     res.json({ hello: "Joe "});
-// });
-
-// // Start Server
-// app.listen(process.env.PORT ) 
-
-//import database
-import 'dotenv/config.js'
-import './Config/database.js'
-import cors from 'cors'
-import express from 'express'
+// Import your middleware
+import { decodeUserFromToken } from './Middleware/auth.js' // Update with the correct path
 
 const app = express();
 
-//Routing
+// Apply CORS middleware for cross-origin requests
+app.use(cors());
+
+// Express JSON parser middleware (required for parsing JSON request bodies)
+app.use(express.json());
+
+// Your custom authentication middleware
+// Make sure it's after body parsing middleware and before your routes
+app.use(decodeUserFromToken);
+
+// Routing
 app.get("/", (req, res) => {
-    res.json({ hello: "ken "});
+    res.json({ hello: "Ken" });
 });
 
+//Use imported routes
+app.use('/closet', closet);
+app.use('/items', itemdetails);
+
 // Start Server
-app.listen(process.env.PORT ) 
+const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT is not defined
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

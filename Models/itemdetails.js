@@ -1,14 +1,16 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
-
-const itemSchema = new Schema({
-    category: { type: String, required: true, enum: categories },
-    color: { type: String, enum: colors },
-    type: { type: String, enum: types },
-    size: { type: String, enum: sizes },
-    brand: { type: String, enum: brands },
-    wearCount: String,
-    notes: String
+//enum was extracted from all the fields 
+const itemDetailsSchema = new Schema({
+    category: { type: String, required: true },
+    color: { type: String },
+    type: { type: String },
+    size: { type: String},
+    brand: { type: String },
+    wearCount: {type: String},
+    notes: {type: String}
 });
 
-module.exports = mongoose.model('Item', itemSchema);
+const ItemDetails = mongoose.model('ItemDetails', itemDetailsSchema);
+export default ItemDetails;
+
