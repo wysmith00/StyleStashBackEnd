@@ -1,31 +1,42 @@
 //import npm packages
 import 'dotenv/config.js'
 import cors from 'cors'
-import express from 'express'
+import express from 'express';
+
+//import routes
+
+import closet from './Routes/closet.js'; 
+import itemdetails from './Routes/itemdetails.js'; 
+import userRouter from './Routes/user.js'
+import profileRouter from './Routes/profile.js'
 
 //connect to MongoDB with mongoose
 import './Config/database.js'
 
-//import routes
-import userRouter from './Routes/user.js'
-import profileRouter from './Routes/profile.js'
-
 //create the express app
 const app = express();
-
 
 //basic middleware
 app.use(cors())
 app.use(express.json())
 
-//Routing
-app.get("/", (req, res) => {
-    res.json({ hello: "Joe "});
-});
+// Your custom authentication middleware
+// Make sure it's after body parsing middleware and before your routes
+app.use(decodeUserFromToken);
 
-//mount imported routes
+//Use imported routes
+app.use('/closet', closet);
+app.use('/items', itemdetails);
 app.use('/StyleStash/user', userRouter)
 app.use('/StyleStash/profile', profileRouter)
 
+// Routing
+app.get("/", (req, res) => {
+    res.json({ hello: "Ken" });
+});
+
 // Start Server
-app.listen(process.env.PORT ) 
+const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT is not defined
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

@@ -1,14 +1,16 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
-const itemSchema = new Schema({
+const itemDetailsSchema = new Schema({
     category: { type: String, required: true },
-    color: String,
-    type: String,
-    size: String,
-    brand: String,
-    wearCount: String,
-    notes: String
+    color: { type: String },
+    type: { type: String },
+    size: { type: String},
+    brand: { type: String },
+    wearCount: {type: String},
+    notes: {type: String}
 });
 
-module.exports = mongoose.model('Item', itemSchema);
+const ItemDetails = mongoose.model('ItemDetails', itemDetailsSchema);
+export default ItemDetails;
+
