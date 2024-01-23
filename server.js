@@ -1,37 +1,39 @@
+//import npm packages
+import 'dotenv/config.js'
+import cors from 'cors'
 import express from 'express';
-import cors from 'cors';
-import 'dotenv/config';
-import jwt from 'jsonwebtoken'; // Import JWT for the middleware
 
-import './Config/database.js'; // Assuming this sets up your database
+//import routes
 
+import closet from './Routes/closet.js'; 
+import itemdetails from './Routes/itemdetails.js'; 
+import userRouter from './Routes/user.js'
+import profileRouter from './Routes/profile.js'
 
-import closet from './Routes/closet.js'; // Import closet routes
-import itemdetails from './Routes/itemdetails.js'; //Import itemDetails Routes
+//connect to MongoDB with mongoose
+import './Config/database.js'
 
-// Import your middleware
-import { decodeUserFromToken } from './Middleware/auth.js' // Update with the correct path
-
+//create the express app
 const app = express();
 
-// Apply CORS middleware for cross-origin requests
-app.use(cors());
-
-// Express JSON parser middleware (required for parsing JSON request bodies)
-app.use(express.json());
+//basic middleware
+app.use(cors())
+app.use(express.json())
 
 // Your custom authentication middleware
 // Make sure it's after body parsing middleware and before your routes
 app.use(decodeUserFromToken);
 
+//Use imported routes
+app.use('/closet', closet);
+app.use('/items', itemdetails);
+app.use('/StyleStash/user', userRouter)
+app.use('/StyleStash/profile', profileRouter)
+
 // Routing
 app.get("/", (req, res) => {
     res.json({ hello: "Ken" });
 });
-
-//Use imported routes
-app.use('/closet', closet);
-app.use('/items', itemdetails);
 
 // Start Server
 const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT is not defined

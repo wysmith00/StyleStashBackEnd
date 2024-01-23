@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-import { User } from '../Models/user.js'
-import { Profile } from '../Models/profile.js'
+import User from '../Models/user.js'
+import Profile  from '../Models/profile.js'
 
 
 function createJWT(user) {
@@ -13,6 +13,7 @@ function createJWT(user) {
 }
 
 function signup(req, res) {
+  console.log("Request Body:", req.body);
   User.findOne({ email: req.body.email })
   .then(user => {
     if (user) {
