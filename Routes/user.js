@@ -1,16 +1,21 @@
 import express from "express";
-const router = express.Router()
+import * as authCtrl from '../Controllers/auth.js'
+import { getUser, deleteUser } from "../Controllers/user.js"
 
-import { getUser, createNewUser, updateUser, deleteUser } from "../Controllers/user"
-//get all user route
-router.get('/all', getUser)
+
+const router = express.Router()
 //create new user route
-router.post('/signup', createNewUser)
+router.post('/signup', authCtrl.signup)
+
+router.post('/login', authCtrl.login)
 //create new user route
-router.put('/updateUser/:id', updateUser)
+router.get('/getUser/:id', getUser)
+
+//router.put('/updateUser/:id', updateUser)
 //delete user route 
 
 router.delete('/deleteUser/:id', deleteUser)
+
 
 
 

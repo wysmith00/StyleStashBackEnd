@@ -1,14 +1,22 @@
-import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema
+//UserID - references Wyatt 'User' collection linking each closet to a specific user
+//closetSchema = storing object Ids to the 'Item' model.  Each array will represent a different closet category
 
-const closetSchema = new Schema({
-    accessories: { type: String },
-    clothes: { type: String },
-    footwear: { type: String },
-    outerwear: { type: String },
-})
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema; 
 
-const Closet = mongoose.model('Closet', closetSchema)
+const closetSchema = new mongoose.Schema({
+    profileId: {
+        type: Schema.Types.Objectid,
+        required: true, 
+        ref: 'Profile'
+    },
+    outerwear: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
+    footwear: [{ type: Schema.Types.ObjecteId, ref: 'Item' }],
+    clothing: [{ type: Schema.Types.ObjectedId, ref: 'Item' }],
+    accessories: [{ type: Schema.Types.objeectedId, ref: 'Item' }]
+});
 
-export default Closet
+module.exports = mongoose.model('Closet', closetSchema);
+
+

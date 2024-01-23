@@ -11,9 +11,9 @@ const profileSchema = new Schema({
     location: { type: String },
     currentStyle: { type: String },
     influences: { type: String },
-    profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Closet' },
+    closet: {type: mongoose.Schema.Types.ObjectId, ref: 'Closet' },
 })
 
 const Profile = mongoose.model('Profile', profileSchema)
 
-export default Profile
+export default Profile 

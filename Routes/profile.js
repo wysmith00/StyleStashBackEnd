@@ -1,17 +1,14 @@
 import express from "express";
-const router = express.Router()
+import { getProfile, updateProfile } from "../Controllers/profile.js"
 
-import { getProfile, createNewProfile, updateProfile, deleteProfile } from "../Controllers/profile"
+const router = express.Router()
 //get all profile route
-router.get('/all', getProfile)
+router.get('/profile', getProfile)
 //create new profile route
-router.post('/signup', createNewProfile)
+//router.post('/newProfile', createNewProfile)
 //edit profile route
 router.put('/updateProfile/:id', updateProfile)
 //delete profile route 
-
-router.delete('/deleteProfile/:id', deleteProfile)
-
 
 
 export default router

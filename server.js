@@ -4,7 +4,7 @@
 
 // //import { router as closetRouter } from './Routes/closet.js'
 // //import { router as profilesRouter } from './Routes/profile.js'
-// //import { router as closetRouter } from './Routes/closet.js'
+//import { router as closetRouter } from './Routes/closet.js'
 
 
 
@@ -30,19 +30,19 @@ import 'dotenv/config.js'
 import './Config/database.js'
 import cors from 'cors'
 import express from 'express'
+import userRouter from './Routes/user.js'
+import profileRouter from './Routes/profile.js'
+
 
 const app = express();
-const PORT = process.env.PORT || 3000
 
-//middleware
-app.use(express.json());
-app.use(cors());
-
-//server port listening on
-app.listen(PORT, function() {
-    console.log(`You are listening on http://localhost:${PORT}`)
+//Routing
+app.get("/", (req, res) => {
+    res.json({ hello: "Joe "});
 });
 
- app.get("/", (req, res) => {
-     res.json({ hello: "Joe "});
- });
+app.use('./StyleStash/user', userRouter)
+app.use('./StyleStash/profile', profileRouter)
+
+// Start Server
+app.listen(process.env.PORT ) 
