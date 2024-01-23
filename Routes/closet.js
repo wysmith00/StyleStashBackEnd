@@ -20,7 +20,7 @@ import closetController from '../Controllers/closet.js';
 
 const router = express.Router();
 
-router.get('/', closetController.getCloset);
+router.get('/:id', closetController.getCloset);
 router.post('/addCloset', closetController.createCloset);
 router.get('/category', closetController.getClosetCategory);
 
