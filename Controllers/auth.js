@@ -11,6 +11,7 @@ function createJWT(user) {
     { expiresIn: '24h' }
   )
 }
+//conditional that every profile created, creates one closet
 
 function signup(req, res) {
   console.log("Request Body:", req.body);
