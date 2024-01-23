@@ -18,7 +18,6 @@ import express from 'express';
 ; // Adjust this import as needed
 import closetController from '../Controllers/closet.js';
 
-
 const router = express.Router();
 
 router.get('/', closetController.getCloset);

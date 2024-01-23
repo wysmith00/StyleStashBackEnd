@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
-//enum was extracted from all the fields 
+
 const itemDetailsSchema = new Schema({
     category: { type: String, required: true },
     color: { type: String },

@@ -6,12 +6,15 @@ import ItemDetails from '../Models/itemdetails.js';
 
 //creating a new closet (assuming you have no items to begin with)
 const createCloset = async (req, res) => {
+    //my models request body and controllers closet.js were not matching as my new closet object I am creating by the request.body were set as arrays when I just need a string within my content body for the category field.
+    let category = req.body.category
     const closet = new Closet({
-        userID: req.body.userID,
-        outerwear: [],
-        footwear: [],
-        clothing: [],
-        accessories: []
+        // userID: req.body.userID,
+        // unneeded fields, only category matches the schemas
+        // outerwear: "",
+        // footwear: "",
+        // clothing: "",
+        category: category
     });
 
     try {
