@@ -1,5 +1,4 @@
 
-//UserID - references Wyatt 'User' collection linking each closet to a specific user
 //closetSchema = storing object Ids to the 'Item' model.  Each array will represent a different closet category
 
 import mongoose from 'mongoose';
