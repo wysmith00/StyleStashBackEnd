@@ -4,9 +4,9 @@ import Profile from '../Models/profile.js'
 
 //GET
 
-const getProfile = async (rec, res) => {
+const getProfile = async (req, res) => {
     try {
-        const profiles = await Profile.find();
+        const profiles = await Profile.findById(req.params.id);
         res.status(200).json(profiles);
     } catch (error) {
         res.status(404).json({ message: error.message });

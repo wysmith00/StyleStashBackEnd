@@ -3,7 +3,7 @@ import { getProfile, updateProfile } from "../Controllers/profile.js"
 
 const router = express.Router()
 //get all profile route
-router.get('/profile', getProfile)
+router.get('/:id', getProfile)
 //create new profile route
 //router.post('/newProfile', createNewProfile)
 //edit profile route
