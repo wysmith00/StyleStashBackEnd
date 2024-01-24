@@ -5,8 +5,8 @@ import express from 'express';
 
 //import routes
 
-import closet from './Routes/closet.js'; 
-import itemdetails from './Routes/itemdetails.js'; 
+import closetRouter from './Routes/closet.js'; 
+import itemdetailsRouter from './Routes/itemdetails.js'; 
 import userRouter from './Routes/user.js'
 import profileRouter from './Routes/profile.js'
 
@@ -25,8 +25,8 @@ app.use(express.json())
 //app.use(decodeUserFromToken);
 
 //Use imported routes
-app.use('/StyleStash/closet', closet);
-app.use('/StyleStash/items', itemdetails);
+app.use('/StyleStash/closet', closetRouter);
+app.use('/StyleStash/items', itemdetailsRouter);
 app.use('/StyleStash/user', userRouter)
 app.use('/StyleStash/profile', profileRouter)
 

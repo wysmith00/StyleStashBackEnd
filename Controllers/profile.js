@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 import Profile from '../Models/profile.js'
 
 
-
-
-
-
 //GET
 
 const getProfile = async (rec, res) => {
