@@ -67,7 +67,7 @@ const getClosetCategory = async (req, res) => {
 };
 
 //Functionality for items 
-q
+
 // const getAllItems = async (req, res) => {
 //     try {
 //         const items = await item.find({});
