@@ -67,10 +67,10 @@ function signup(req, res) {
                 console.log(closet)
 
                 closet.save()
-                  .then(closet => {
+                  .then(newCloset => {
                     // Closet created successfully, now create JWT and send response
                     const token = createJWT(user);
-                    res.status(200).json({ token, closet: closet });
+                    res.status(200).json({ token, closet: newCloset });
                   })
                   .catch(closetError => {
                     // Handle error in closet creation
