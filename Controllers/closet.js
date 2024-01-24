@@ -2,7 +2,7 @@
 import Closet from '../Models/closet.js';
 
 //Importing item details model
-import ItemDetails from '../Models/itemdetails.js';
+import item from '../Models/item.js';
 
 //creating a new closet (assuming you have no items to begin with)
 const createCloset = async (req, res) => {
@@ -65,13 +65,29 @@ const getClosetCategory = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+//Functionality for items 
+
+// const getAllItems = async (req, res) => {
+//     try {
+//         const items = await item.find({});
+//         res.status(200).json(items);
+//     } catch (error) {
+//         res.status(500).send(error.message);
+//     }
+// };
+
+
 export default { createCloset, getCloset, getClosetCategory };
+
+
+
 
 // //Importing closet model
 // import Closet from '../Models/closet.js';
 
 // //Importing item details model
-// import ItemDetails from '../Models/itemdetails.js';
+// import item from '../Models/item.js';
 
 // //creating a new closet (assuming you have no items to begin with)
 // exports.createCloset = async (req, res) => {
