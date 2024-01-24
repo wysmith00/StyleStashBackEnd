@@ -2,7 +2,6 @@ import express from "express";
 import * as authCtrl from '../Controllers/auth.js'
 import { getUser, deleteUser } from "../Controllers/user.js"
 
-
 const router = express.Router()
 //create new user route
 router.post('/signup', authCtrl.signup)
@@ -15,8 +14,5 @@ router.get('/getUser/:id', getUser)
 //delete user route 
 
 router.delete('/deleteUser/:id', deleteUser)
-
-
-
 
 export default router

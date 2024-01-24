@@ -1,32 +1,32 @@
-//Importing closet model
 import Closet from '../Models/closet.js';
 
 //Importing item details model
 import ItemDetails from '../Models/itemdetails.js';
 
+//Jan23rd, 2024
 //creating a new closet (assuming you have no items to begin with)
 const createCloset = async (req, res) => {
-    //my models request body and controllers closet.js were not matching as my new closet object I am creating by the request.body were set as arrays when I just need a string within my content body for the category field.
-    let category = req.body.category
-    const closet = new Closet({
-        // userID: req.body.userID,
-        // unneeded fields, only category matches the schemas
-        // outerwear: "",
-        // footwear: "",
-        // clothing: "",
-        category: category
-    });
+//     //my models request body and controllers closet.js were not matching as my new closet object I am creating by the request.body were set as arrays when I just need a string within my content body for the category field.
+        let category = req.body.category
+        const closet = new Closet({
+            profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'},
+            // unneeded fields, only category matches the schemas
+            // outerwear: "",
+            // footwear: "",
+            // clothing: "",
+         category: category
+  });
 
-    try {
-        const newCloset = await closet.save();
-        res.status(201).json(newCloset);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
+  try {
+    const newCloset = await closet.save();
+    res.status(201).json(newCloset);
+} catch (err) {
+    res.status(400).json({ message: err.message });
+}
 };
 
 // Get a user's closet
-const getCloset = async (req, res) => {
+ const getCloset = async (req, res) => {
     try {
         const closet = await Closet.findById(req.params.closetId)
             .populate('userID')
@@ -67,6 +67,7 @@ const getClosetCategory = async (req, res) => {
 };
 export default { createCloset, getCloset, getClosetCategory };
 
+//Jan22nd, 2024
 // //Importing closet model
 // import Closet from '../Models/closet.js';
 
