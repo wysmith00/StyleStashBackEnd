@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const closetSchema = new mongoose.Schema({
     profileId: {
         type: Schema.Types.ObjectId,
-        required: true, 
+        //required: true, 
         ref: 'Profile'
     },
     // category: {
