@@ -1,48 +1,42 @@
-// import express from 'express'
-// import cors from 'cors'
-// //import './Config/database.js'
-
-// //import { router as closetRouter } from './Routes/closet.js'
-// //import { router as profilesRouter } from './Routes/profile.js'
-// //import { router as closetRouter } from './Routes/closet.js'
-
-
-
-// //Load env
-// require("dotenv").config();
-
-// //Import dependencies 
-// const express = require("express")
-
-// //Express 
-// const app = express();
-
-// //Routing
-// app.get("/", (req, res) => {
-//     res.json({ hello: "Joe "});
-// });
-
-// // Start Server
-// app.listen(process.env.PORT ) 
-
-//import database
+//import npm packages
 import 'dotenv/config.js'
-import './Config/database.js'
 import cors from 'cors'
-import express from 'express'
+import express from 'express';
 
+//import routes
+
+import closetRouter from './Routes/closet.js'; 
+import itemdetailsRouter from './Routes/itemdetails.js'; 
+import userRouter from './Routes/user.js'
+import profileRouter from './Routes/profile.js'
+
+//connect to MongoDB with mongoose
+import './Config/database.js'
+
+//create the express app
 const app = express();
-const PORT = process.env.PORT || 3000
 
-//middleware
-app.use(express.json());
-app.use(cors());
+//basic middleware
+app.use(cors())
+app.use(express.json())
 
-//server port listening on
-app.listen(PORT, function() {
-    console.log(`You are listening on http://localhost:${PORT}`)
+// Your custom authentication middleware
+// Make sure it's after body parsing middleware and before your routes
+//app.use(decodeUserFromToken);
+
+//Use imported routes
+app.use('/StyleStash/closet', closetRouter);
+app.use('/StyleStash/items', itemdetailsRouter);
+app.use('/StyleStash/user', userRouter)
+app.use('/StyleStash/profile', profileRouter)
+
+// Routing
+app.get("/", (req, res) => {
+    res.json({ hello: "Ken" });
 });
 
- app.get("/", (req, res) => {
-     res.json({ hello: "Joe "});
- });
+// Start Server
+const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT is not defined
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
