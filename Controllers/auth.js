@@ -1,13 +1,10 @@
 import jwt from 'jsonwebtoken'
-
 import User from '../Models/user.js'
 import Profile  from '../Models/profile.js'
 import Closet from '../Models/closet.js';
-
-
 function createJWT(user) {
   return jwt.sign(
-    { user }, 
+    { user },
     process.env.SECRET,
     { expiresIn: '24h' }
   )
@@ -43,7 +40,6 @@ function signup(req, res) {
   })
 }
 */
-
 function signup(req, res) {
   console.log("Request Body:", req.body);
   User.findOne({ email: req.body.email })
@@ -55,17 +51,18 @@ function signup(req, res) {
       } else {
         Profile.create(req.body)
           .then(newProfile => {
-            req.body.profile = newProfile._id;
+            let profileId = newProfile._id
+            req.body.profile = profileId;
             User.create(req.body)
               .then(user => {
-                // Create a closet for the new user. Closet is created after the profile is created, OR closet route 
+                // Create a closet for the new user. Closet is created after the profile is created, OR closet route
                 const closet  = new Closet({
                   // Assuming the userID is required to associate the closet with the user
+                  profile: profileId, 
                   userID: user._id,
                   category: ""  // Initialize with an empty category or any default value
                 });
                 console.log(closet)
-
                 closet.save()
                   .then(newCloset => {
                     // Closet created successfully, now create JWT and send response
@@ -88,8 +85,6 @@ function signup(req, res) {
       res.status(500).json({ err: err.message });
     });
 }
-
-
 function login(req, res) {
   User.findOne({ email: req.body.email })
   .then(user => {
@@ -107,5 +102,11 @@ function login(req, res) {
     res.status(500).json(err)
   })
 }
-
 export { signup, login }
+
+
+
+
+
+
+
