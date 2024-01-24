@@ -2,7 +2,12 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
 const itemDetailsSchema = new Schema({
-    category: { type: String, required: true },
+    //enum category
+    category: {
+        type: String,
+        required: true,
+        enum: ['outerwear', 'footwear', 'clothing', 'accessories'],
+    },
     color: { type: String },
     type: { type: String },
     size: { type: String},
