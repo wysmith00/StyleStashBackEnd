@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken'
+
 import User from '../Models/user.js'
 import Profile  from '../Models/profile.js'
-import Closet from '../Models/closet.js';
+import Closet from '../Models/closet.js'
+
+
 function createJWT(user) {
   return jwt.sign(
-    { user },
+    { user }, 
     process.env.SECRET,
     { expiresIn: '24h' }
   )
@@ -12,6 +15,7 @@ function createJWT(user) {
 
 function signup(req, res) {
   console.log("Request Body:", req.body);
+
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
@@ -19,42 +23,33 @@ function signup(req, res) {
       } else if (!process.env.SECRET) {
         throw new Error('no SECRET in .env file');
       } else {
-        Profile.create(req.body)
-          .then(newProfile => {
-            let profileId = newProfile._id
-            req.body.profile = profileId;
-            User.create(req.body)
-              .then(user => {
-                // Create a closet for the new user. Closet is created after the profile is created, OR closet route
-                const closet  = new Closet({
-                  // Assuming the userID is required to associate the closet with the user
-                  profile: profileId, 
-                  userID: user._id,
-                  category: ""  // Initialize with an empty category or any default value
-                });
-                console.log(closet)
-                closet.save()
-                  .then(newCloset => {
-                    // Closet created successfully, now create JWT and send response
-                    const token = createJWT(user);
-                    res.status(200).json({ token, closet: newCloset });
-                  })
-                  .catch(closetError => {
-                    // Handle error in closet creation
-                    res.status(500).json({ err: closetError.message });
-                  });
-              })
-              .catch(err => {
-                Profile.findByIdAndDelete(newProfile._id);
-                res.status(500).json({ err: err.errmsg });
-              });
-          });
+        return Closet.create(req.body); // Create the closet and return the promise
       }
     })
+    .then(newCloset => {
+      req.body.closet = newCloset._id; // Assign the new closet ID
+      return Profile.create(req.body); // Create the profile and return the promise
+    })
+    .then(newProfile => {
+      req.body.profile = newProfile._id;
+      return User.create(req.body); // Create the user and return the promise
+    })
+    .then(user => {
+      const token = createJWT(user);
+      res.status(200).json({ token }); // Send the response
+    })
     .catch(err => {
+      // If an error occurs at any point in the chain, this block will handle it
+      if (req.body.profile) {
+        Profile.findByIdAndDelete(req.body.profile).catch(deleteErr => {
+          console.error('Error deleting profile:', deleteErr);
+        });
+      }
       res.status(500).json({ err: err.message });
     });
 }
+
+
 function login(req, res) {
   User.findOne({ email: req.body.email })
   .then(user => {
@@ -72,41 +67,5 @@ function login(req, res) {
     res.status(500).json(err)
   })
 }
+
 export { signup, login }
-
-
-//conditional that every profile created, creates one closet
-/*
-function signup(req, res) {
-  console.log("Request Body:", req.body);
-  User.findOne({ email: req.body.email })
-  .then(user => {
-    if (user) {
-      throw new Error('Account already exists')
-    } else if (!process.env.SECRET){
-      throw new Error('no SECRET in .env file')
-    } else {
-      Profile.create(req.body)
-      .then(newProfile => {
-        req.body.profile = newProfile._id
-        User.create(req.body)
-        .then(user => {
-          const token = createJWT(user)
-          res.status(200).json({ token })
-        })
-        .catch(err => {
-          Profile.findByIdAndDelete(newProfile._id)
-          res.status(500).json({err: err.errmsg})
-        })
-      })
-    }
-  })
-  .catch(err => {
-    res.status(500).json({err: err.message})
-  })
-}
-*/
-
-
-
-
