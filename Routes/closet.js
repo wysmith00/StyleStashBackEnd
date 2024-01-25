@@ -14,7 +14,7 @@ router.get('/allItems', closetController.getAllItems);
 // functioning route
 router.post('/addItem', closetController.addItem);
 //functioning route
-router.get('/:closetId/:category', closetController.getItemsByCategory);
+router.get('/categroy/:category', closetController.getItemsByCategory);
 
 export default router;
 
