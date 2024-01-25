@@ -25,7 +25,7 @@ const createCloset = async (req, res) => {
     }
 };
 
-// Get a user's closet
+// Get a user's closet Kenneth's
 const getCloset = async (req, res) => {
     try {
         const closet = await Closet.findById(req.params.closetId)
@@ -66,6 +66,7 @@ const getClosetCategory = async (req, res) => {
     }
 };
 
+//need delete function within a closet.js 
 //Functionality for items 
 
 // const getAllItems = async (req, res) => {

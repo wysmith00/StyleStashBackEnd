@@ -6,7 +6,7 @@ import itemController from '../Controllers/item.js'
 router.get('/', itemController.getAllItems);
 router.get('/:id', itemController.getItem);
 router.post('/item', itemController.addItem);
-router.patch('/updateItem/:id', itemController.updateItem);
+router.put('/updateItem/:id', itemController.updateItem);
 router.delete('/deleteItem/:id', itemController.deleteItem)
 
 export default router;
