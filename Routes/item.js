@@ -7,6 +7,7 @@ router.get('/', itemController.getAllItems);
 router.get('/:id', itemController.getItem);
 
 
+
 router.post('/item', itemController.addItem);
 
 //check this route
@@ -17,3 +18,4 @@ router.delete('/deleteItem/:id', itemController.deleteItem)
 
 
 export default router;
+

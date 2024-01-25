@@ -60,6 +60,7 @@ const getClosetCategory = async (req, res) => {
     }
 };
 
+
 //Functionality for items 
 
 const getAllItems = async (req, res) => {

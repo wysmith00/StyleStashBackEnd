@@ -61,26 +61,5 @@ const deleteItem = async (req, res) => {
     }
 };
 
-const getItemsByCategory = async (req, res) => {
-    try {
-        const category = req.params.category;
-
-        // Validate if the category is one of the allowed values
-        const validCategories = ['outerwear', 'footwear', 'clothing', 'accessories'];
-        if (!validCategories.includes(category.toLowerCase())) {
-            return res.status(400).send('Invalid category');
-        }
-
-        const items = await item.find({ category: category });
-
-        if (items.length === 0) {
-            return res.status(404).send('No items found in this category');
-        }
-
-        res.status(200).json(items);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-};
 
 export default { getItem, addItem, updateItem, deleteItem, getAllItems}
