@@ -95,7 +95,7 @@ const addItem = async (req, res) => {
 
 const getItemsByCategory = async (req, res) => {
     try {
-        const closetId = req.params.closetId;
+        const closetId = req.body.closetId;
         const category = req.params.category;
 
         // Log the received parameters

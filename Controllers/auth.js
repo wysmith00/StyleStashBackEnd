@@ -54,7 +54,7 @@ function login(req, res) {
   User.findOne({ email: req.body.email })
   .then(user => {
     if (!user) return res.status(401).json({ err: 'User not found'})
-    user.comparePassword(req.body.pw, (err, isMatch) => {
+    user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch) {
         const token = createJWT(user)
         res.json({ token })
