@@ -3,18 +3,16 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 //make sure whatever is in my model is in my request body, in terms of model fields; consistency between those fields and the object from the request body that I am sending
+
+
 const closetSchema = new mongoose.Schema({
     profileId: {
         type: Schema.Types.ObjectId,
-        //required: true, 
         ref: 'Profile'
     },
-    // category: {
-    //     type: String,
-    //     required: true,
-    //     enum: ['outerwear', 'footwear', 'clothing', 'accessories'],
-    // },
-    item: [{ type: Schema.Types.ObjectId, ref: 'Item' }]
+    items: [{ type: Schema.Types.ObjectId, ref: 'Item' }]
+
+
 });
 
 const Closet = mongoose.model('Closet', closetSchema);
@@ -22,28 +20,3 @@ const Closet = mongoose.model('Closet', closetSchema);
 export default Closet;
 
 
-// //closetSchema = storing object Ids to the 'Item' model.  Each array will represent a different closet category
-
-// import mongoose from 'mongoose';
-// const Schema = mongoose.Schema;
-// //make sure whatever is in my model is in my request body, in terms of model fields; consistency between those fields and the object from the request body that I am sending
-// const closetSchema = new mongoose.Schema({
-//     profileId: {
-//         type: Schema.Types.ObjectId,
-//         //required: true, 
-//         ref: 'profile'
-//     },
-//     category: {
-//         type: String,
-//         //required: true,
-//         //enum: ['outerwear', 'footwear', 'clothing', 'accessories'],
-//     },
-//     items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
-//     profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'}
-// });
-
-// const Closet = mongoose.model('Closet', closetSchema);
-
-// export default Closet
-
-// Closet.js

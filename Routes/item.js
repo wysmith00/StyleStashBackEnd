@@ -5,10 +5,17 @@ import itemController from '../Controllers/item.js'
 
 router.get('/', itemController.getAllItems);
 router.get('/:id', itemController.getItem);
+
+
+
 router.post('/item', itemController.addItem);
+
+//check this route
 router.patch('/updateItem/:id', itemController.updateItem);
+
+//check this route
 router.delete('/deleteItem/:id', itemController.deleteItem)
 
-export default router;
 
+export default router;
 

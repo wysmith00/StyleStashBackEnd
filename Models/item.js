@@ -2,6 +2,12 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
+
+    closet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Closet'
+    },
+
     category: {
              type: String,
              required: true,

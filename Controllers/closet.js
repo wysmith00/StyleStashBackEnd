@@ -25,25 +25,19 @@ const createCloset = async (req, res) => {
 }
 };
 
-// Get a user's closet
- const getCloset = async (req, res) => {
+
+const getCloset = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.params.closetId)
-            .populate('userID')
-            .populate('outerwear')
-            .populate('footwear')
-            .populate('clothing')
-            .populate('accessories');
-
-        if (!closet) {
-            return res.status(404).json({ message: "Closet not found" });
-        }
-
-        res.json(closet);
+        const closet = await Closet.findById(req.params.id)
+        res.status(200).json(closet);
     } catch (err) {
+        // Handle potential errors
         res.status(500).json({ message: err.message });
     }
 };
+
+
+
 
 //get a user's closet by category
 const getClosetCategory = async (req, res) => {
@@ -66,89 +60,78 @@ const getClosetCategory = async (req, res) => {
     }
 };
 
+
 //Functionality for items 
 
-// const getAllItems = async (req, res) => {
-//     try {
-//         const items = await item.find({});
-//         res.status(200).json(items);
-//     } catch (error) {
-//         res.status(500).send(error.message);
-//     }
-// };
+const getAllItems = async (req, res) => {
+    try {
+        const items = await item.find({});
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+const addItem = async (req, res) => {
+    try {
+        const newItem = new item({
+            ...req.body,
+            closet: req.body.closetId 
+        });
+
+        await newItem.save();
+
+        const closet = await Closet.findById(req.body.closetId);
+        if (!closet) {
+            return res.status(404).send('Closet not found');
+        }
+        closet.items.push(newItem._id);
+        await closet.save();
+
+        res.status(201).json(newItem);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+const getItemsByCategory = async (req, res) => {
+    try {
+        const closetId = req.params.closetId;
+        const category = req.params.category;
+
+        // Log the received parameters
+        console.log("Received Closet ID:", closetId);
+        console.log("Received Category:", category);
+
+        // Validate the category
+        const validCategories = ['outerwear', 'footwear', 'clothing', 'accessories'];
+        if (!validCategories.includes(category.toLowerCase())) {
+            return res.status(400).send('Invalid category');
+        }
+
+        // Fetch the closet
+        const closet = await Closet.findById(closetId).populate({
+            path: 'items',
+            match: { category: category }
+        });
+
+        // Log the fetched closet
+        console.log("Fetched Closet:", closet);
+
+        if (!closet) {
+            return res.status(404).send('Closet not found');
+        }
+
+        if (!closet.items || closet.items.length === 0) {
+            return res.status(404).send('No items found in this category in the closet');
+        }
+
+        res.status(200).json(closet.items);
+    } catch (error) {
+        console.log("Error:", error.message); // Log the error message
+        res.status(500).send(error.message);
+    }
+};
 
 
-export default { createCloset, getCloset, getClosetCategory };
-
-
-
-
-// //Importing closet model
-// import Closet from '../Models/closet.js';
-
-// //Importing item details model
-// import item from '../Models/item.js';
-
-// //creating a new closet (assuming you have no items to begin with)
-// exports.createCloset = async (req, res) => {
-//     const closet = new Closet({
-//         userID: req.body.userID,
-//         outerwear: [],
-//         footwear: [],
-//         clothing: [],
-//         accessories: []
-//     });
-
-//     try {
-//         const newCloset = await closet.save();
-//         res.status(201).json(newCloset);
-//     } catch (err) {
-//         res.status(400).json({ message: err.message });
-//     }
-// };
-
-// // Get a user's closet
-// exports.getCloset = async (req, res) => {
-//     try {
-//         const closet = await Closet.findById(req.params.closetId)
-//             .populate('userID')
-//             .populate('outerwear')
-//             .populate('footwear')
-//             .populate('clothing')
-//             .populate('accessories');
-
-//         if (!closet) {
-//             return res.status(404).json({ message: "Closet not found" });
-//         }
-
-//         res.json(closet);
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
-// };
-
-// //get a user's closet by category
-// exports.getClosetCategory = async (req, res) => {
-//     try {
-//         const category = req.params.category;
-        
-//         const validCategories = ['accessories', 'outerwear', 'footwear', 'clothing'];
-//         if (!validCategories.includes(category.toLowerCase())) {
-//             return res.status(400).send('Invalid category');
-//         }
-
-//         const items = await fetchItemsByCategory(category);
-
-//         if (!items || items.length === 0) {
-//             return res.status(404).send('No items found in this category');
-//         }
-//         res.json(items);
-//     } catch (error) {
-//         res.status(500).send('Server error');
-//     }
-// };
-
-
-// module.exports = { getClosetCategory };
-
-
+export default { createCloset, getCloset, getClosetCategory, getAllItems, addItem, getItemsByCategory};
