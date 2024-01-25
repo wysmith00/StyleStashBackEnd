@@ -5,10 +5,11 @@ import express from 'express';
 
 //import routes
 
-import closet from './Routes/closet.js'; 
-import item from './Routes/item.js'; 
+import closetRouter from './Routes/closet.js'; 
+import itemRouter from './Routes/item.js'; 
 import userRouter from './Routes/user.js'
 import profileRouter from './Routes/profile.js'
+
 
 //connect to MongoDB with mongoose
 import './Config/database.js'
@@ -25,8 +26,8 @@ app.use(express.json())
 //app.use(decodeUserFromToken);
 
 //Use imported routes
-app.use('/StyleStash/closet', closet);
-app.use('/StyleStash/items', item);
+app.use('/StyleStash/closet', closetRouter);
+app.use('/StyleStash/items', itemRouter);
 app.use('/StyleStash/user', userRouter)
 app.use('/StyleStash/profile', profileRouter)
 

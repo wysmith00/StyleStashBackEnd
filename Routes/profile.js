@@ -10,5 +10,4 @@ router.get('/:id', getProfile)
 router.put('/updateProfile/:id', updateProfile)
 //delete profile route 
 
-
 export default router
