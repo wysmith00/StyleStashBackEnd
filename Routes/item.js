@@ -3,11 +3,11 @@ const router = express.Router();
 // import { getItem, addItem, updateItem, deleteItem } from '../Controllers/item.js';
 import itemController from '../Controllers/item.js'
 
-router.get('/', itemController.getAllItems);
-router.get('/:id', itemController.getItem);
-router.post('/item', itemController.addItem);
-router.put('/updateItem/:id', itemController.updateItem);
-router.delete('/deleteItem/:id', itemController.deleteItem)
+router.get('/', itemController.getAllItems); //NOT NEEDED
+router.get('/:id', itemController.getItem); //NEED TO TEST
+router.post('/item', itemController.addItem); //NOT NEEDED
+router.put('/updateItem/:id', itemController.updateItem); //NEED TO TEST
+router.delete('/deleteItem/:id', itemController.deleteItem) //NOT NEEDED
 
 export default router;
 

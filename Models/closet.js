@@ -10,12 +10,9 @@ const closetSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Profile'
     },
-    category: {
-        type: String,
-        required: true,
-        enum: ['outerwear', 'footwear', 'clothing', 'accessories'],
-    },
     items: [{ type: Schema.Types.ObjectId, ref: 'Item' }]
+
+
 });
 
 const Closet = mongoose.model('Closet', closetSchema);

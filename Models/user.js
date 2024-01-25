@@ -8,8 +8,8 @@ const userSchema = new Schema({
     username: { type: String, required: true, lowercase: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    passwordConfirm: { type: String, required: true },
     profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile'},
+    closet: {type: Schema.Types.ObjectId, ref: 'Closet'}
 })
 
 // set the user schema options to include the virtual field for the profile

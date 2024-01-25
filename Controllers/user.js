@@ -20,12 +20,7 @@ const getUser = async (req, res) => {
 }
 
 
-
-
-
 //SIGNUP AND LOGIN COMPLETED IN AUTH
-
-
 
 //user delete
 const deleteUser = async (req, res) => {
