@@ -151,7 +151,8 @@ const deleteItem = async (req, res) => {
             return res.status(404).send('Item not found');
         }
 
-        await itemToDelete.remove();
+        // Use deleteOne instead of remove
+        await Item.deleteOne({ _id: itemId });
 
         const closet = await Closet.findById(itemToDelete.closet);
         if (closet) {
@@ -164,5 +165,6 @@ const deleteItem = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
 
 export default { createCloset, getCloset, getClosetCategory, getItemsByCategory, getAllItems, addItem, deleteItem };
