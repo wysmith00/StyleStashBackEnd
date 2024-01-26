@@ -23,7 +23,7 @@ router.get('/allItems', closetController.getAllItems);
 router.post('/addItem', closetController.addItem);
 
 //Delete item from Closet NEEDS TO TEST - working, jan 25, 7:51PM changed delete function in controllers/closet.js
-router.delete('/item/:itemId', closetController.deleteItem)
+router.delete('/deleteItem/:itemId', closetController.deleteItem)
 
 export default router;
 
