@@ -75,12 +75,12 @@ const addItem = async (req, res) => {
     try {
         const newItem = new item({
             ...req.body,
-            closet: req.body.closetId 
+            closet: req.params.closetId 
         });
 
         await newItem.save();
 
-        const closet = await Closet.findById(req.body.closetId);
+        const closet = await Closet.findById(req.params.closetId);
         if (!closet) {
             return res.status(404).send('Closet not found');
         }
@@ -95,7 +95,7 @@ const addItem = async (req, res) => {
 
 const getItemsByCategory = async (req, res) => {
     try {
-        const closetId = req.body.closetId;
+        const closetId = req.params.closetId;
         const category = req.params.category;
 
         // Log the received parameters

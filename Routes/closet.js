@@ -12,9 +12,9 @@ router.get('/category', closetController.getClosetCategory);
 // check route below
 router.get('/allItems', closetController.getAllItems);
 // functioning route
-router.post('/addItem', closetController.addItem);
+router.post('/:closetId/addItem', closetController.addItem);
 //functioning route
-router.get('/categroy/:category', closetController.getItemsByCategory);
+router.get('/:closetId/:category', closetController.getItemsByCategory);
 
 export default router;
 
