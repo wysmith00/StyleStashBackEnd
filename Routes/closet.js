@@ -15,7 +15,7 @@ router.get('/:closetId/:category', decodeUserFromToken, checkAuth, closetControl
 
 router.get('/allItems', decodeUserFromToken, checkAuth, closetController.getAllItems);
 
-router.post('/addItem', decodeUserFromToken, checkAuth, closetController.addItem);
+router.post('/:closetId/addItem', decodeUserFromToken, checkAuth, closetController.addItem);
 
 router.delete('/deleteItem/:itemId', decodeUserFromToken, checkAuth, closetController.deleteItem)
 

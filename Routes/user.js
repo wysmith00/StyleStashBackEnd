@@ -11,6 +11,9 @@ router.post('/login', authCtrl.login)
 
 router.get('/getUser/:id', decodeUserFromToken, checkAuth, getUser)
 
+//router.put('/updateUser/:id', updateUser)
+//delete user route
+
 router.delete('/deleteUser/:id', decodeUserFromToken, checkAuth, deleteUser) 
 
 export default router
