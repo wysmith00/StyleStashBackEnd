@@ -29,25 +29,6 @@ const getCloset = async (req, res) => {
     }
 };
 
-/*
-const getCloset = async (req, res) => {
-    try {
-        // Accessing the closet ID from URL parameters
-        const closetId = req.params.closetId;
-        const closet = await Closet.findById(closetId);
-
-        // Check if closet is found
-        if (!closet) {
-            return res.status(404).json({ message: "Closet not found" });
-        }
-
-        res.status(200).json(closet);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
-*/
-
 // Get a user's closet by category
 const getClosetCategory = async (req, res) => {
     try {
