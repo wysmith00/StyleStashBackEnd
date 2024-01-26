@@ -17,7 +17,7 @@ router.get('/category', closetController.getClosetCategory);
 router.get('/category/:category', closetController.getItemsByCategory);
 
 //Get all items in a closet NOT NEEDED
-router.get('/allitems', closetController.getAllItems);
+router.get('/allItems', closetController.getAllItems);
 
 //Add item within Closet WORKING
 router.post('/addItem', closetController.addItem);

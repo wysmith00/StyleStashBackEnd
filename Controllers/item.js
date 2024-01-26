@@ -10,7 +10,7 @@ const getAllItems = async (req, res) => {
     }
 };
 
-// Get an itemdetails by ID
+// Get an item by ID
 const getItem = async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);

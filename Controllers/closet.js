@@ -22,7 +22,7 @@ const createCloset = async (req, res) => {
 
 const getCloset = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.body.id);
+        const closet = await Closet.findById(req.params.id);
         res.status(200).json(closet);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -57,7 +57,7 @@ const getClosetCategory = async (req, res) => {
             return res.status(400).send('Invalid category');
         }
 
-        const items = await Item.find({ category: category }); 
+        const items = await fetchItemsByCategory(category);
 
         if (!items || items.length === 0) {
             return res.status(404).send('No items found in this category');
@@ -74,22 +74,36 @@ const getItemsByCategory = async (req, res) => {
         const closetId = req.body.closetId;
         const category = req.params.category;
 
+        // Log the received parameters
+        console.log("Received Closet ID:", closetId);
+        console.log("Received Category:", category);
+
+        // Validate the category
         const validCategories = ['outerwear', 'footwear', 'clothing', 'accessories'];
         if (!validCategories.includes(category.toLowerCase())) {
             return res.status(400).send('Invalid category');
         }
 
+        // Fetch the closet
         const closet = await Closet.findById(closetId).populate({
             path: 'items',
             match: { category: category }
         });
 
-        if (!closet || !closet.items || closet.items.length === 0) {
+        // Log the fetched closet
+        console.log("Fetched Closet:", closet);
+
+        if (!closet) {
+            return res.status(404).send('Closet not found');
+        }
+
+        if (!closet.items || closet.items.length === 0) {
             return res.status(404).send('No items found in this category in the closet');
         }
 
         res.status(200).json(closet.items);
     } catch (error) {
+        console.log("Error:", error.message); // Log the error message
         res.status(500).send(error.message);
     }
 };
@@ -114,7 +128,7 @@ const addItem = async (req, res) => {
             closet: req.body.closetId
         });
         await newItem.save();
-        
+
         const closet = await Closet.findById(req.body.closetId);
         if (!closet) {
             return res.status(404).send('Closet not found');
