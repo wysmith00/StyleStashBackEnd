@@ -7,7 +7,7 @@ const router = express.Router();
 //Create a new closet NOT NEEDED
 router.post('/', closetController.createCloset);
 
-//Get a specific closet NEED TO TEST
+//Get a specific closet NEED TO TEST - working, jan 25, 9:46PM 
 router.get('/:closetId', closetController.getCloset);
 
 //Get a specific closet by category NOT NEEDED

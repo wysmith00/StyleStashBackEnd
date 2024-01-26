@@ -22,7 +22,7 @@ const createCloset = async (req, res) => {
 
 const getCloset = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.params.id);
+        const closet = await Closet.findById(req.params.closetId);//changed to req.params.closetid, instead of "id"
         res.status(200).json(closet);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -123,7 +123,7 @@ const getAllItems = async (req, res) => {
 // Add item to closet
 const addItem = async (req, res) => {
     try {
-        const newItem = new item({
+        const newItem = new Item({ //capitalize "i" for item
             ...req.body,
             closet: req.body.closetId
         });
