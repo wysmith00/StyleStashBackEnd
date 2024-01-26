@@ -1,34 +1,23 @@
-/*import express from "express";
-const router = express.Router()
-const closet = require('../Controllers/closet');
-
-//Get a closet
-router.get('/', getCloset);
-
-//add a closet
-router.post('/addCloset', addCloset); 
-
-//Get a closet by category
-router.get('/category', getClosetCategory);
-
-export default router;*/
-
 import express from 'express';
-// import { createCloset, getCloset, getClosetCategory } from '../Controllers/closet.js';
-; // Adjust this import as needed
+
 import closetController from '../Controllers/closet.js';
+import { decodeUserFromToken, checkAuth } from '../Middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/:id', closetController.getCloset);
-router.post('/addCloset', closetController.createCloset);
-router.get('/category', closetController.getClosetCategory);
+router.post('/', decodeUserFromToken, checkAuth, closetController.createCloset);
 
+router.get('/:closetId', decodeUserFromToken, checkAuth, closetController.getCloset);
 
-// Use the methods from the imported controller
-// router.get('/', closetController.getCloset); // Assuming closetController has a method named getCloset
-// router.post('/addCloset', closetController.addCloset); // Assuming closetController has a method named addCloset
-// router.get('/category', closetController.getClosetCategory); // Assuming closetController has a method named getClosetCategory
+router.get('/category', decodeUserFromToken, checkAuth, closetController.getClosetCategory);
+
+router.get('/:closetId/:category', decodeUserFromToken, checkAuth, closetController.getItemsByCategory);
+
+router.get('/allItems', decodeUserFromToken, checkAuth, closetController.getAllItems);
+
+router.post('/:closetId/addItem', decodeUserFromToken, checkAuth, closetController.addItem);
+
+router.delete('/deleteItem/:itemId', decodeUserFromToken, checkAuth, closetController.deleteItem)
 
 export default router;
 

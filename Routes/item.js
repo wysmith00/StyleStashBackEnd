@@ -1,26 +1,21 @@
 import express from "express";
 const router = express.Router();
-// import { getItem, addItem, updateItem, deleteItem } from '../Controllers/itemdetails.js';
-import itemDetailsController from '../Controllers/item.js'
+import itemController from '../Controllers/item.js'
+import { decodeUserFromToken, checkAuth } from "../Middleware/auth.js";
 
-router.get('/', itemDetailsController.getAllItems);
-router.get('/:id', itemDetailsController.getItem);
-router.post('/item', itemDetailsController.addItem);
-router.patch('/updateItem/:id', itemDetailsController.updateItem);
-router.delete('/deleteItem/:id', itemDetailsController.deleteItem)
+router.get('/', decodeUserFromToken, checkAuth, itemController.getAllItems); 
+
+router.get('/:id', decodeUserFromToken, checkAuth, itemController.getItem); 
+
+router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem); 
+
+
+router.put('/updateItem/:id', decodeUserFromToken, checkAuth, itemController.updateItem);
+
+router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem);
+
+router.delete('/deleteItem/:id', decodeUserFromToken, checkAuth, itemController.deleteItem)
 
 export default router;
 
-// Get an item
-// router.get('/:id', getItem);
 
-// // Add a new item
-// router.post('/item', addItem);
-
-// // Update an item
-// router.patch('/updateItem/:id', updateItem);
-
-// // Delete an item
-// router.delete('/deleteItem/:id', deleteItem);
-
-// export default router;

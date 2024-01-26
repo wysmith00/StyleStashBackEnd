@@ -5,10 +5,11 @@ import express from 'express';
 
 //import routes
 
-import closet from './Routes/closet.js'; 
-import itemdetails from './Routes/itemdetails.js'; 
+import closetRouter from './Routes/closet.js'; 
+import itemRouter from './Routes/item.js'; 
 import userRouter from './Routes/user.js'
 import profileRouter from './Routes/profile.js'
+
 
 //connect to MongoDB with mongoose
 import './Config/database.js'
@@ -21,12 +22,8 @@ app.use(cors())
 app.use(express.json())
 
 // Your custom authentication middleware
-// Make sure it's after body parsing middleware and before your routes
-app.use(decodeUserFromToken);
-
-//Use imported routes
-app.use('/closet', closet);
-app.use('/items', itemdetails);
+app.use('/StyleStash/closet', closetRouter);
+app.use('/StyleStash/items', itemRouter);
 app.use('/StyleStash/user', userRouter)
 app.use('/StyleStash/profile', profileRouter)
 
