@@ -14,7 +14,7 @@ router.get('/:closetId', closetController.getCloset);
 router.get('/category', closetController.getClosetCategory);
 
 //Get all items by category within a specific closet WORKING 
-router.get('/category/:category', closetController.getItemsByCategory);
+router.get('/:closetId/:category', closetController.getItemsByCategory);
 
 //Get all items in a closet NOT NEEDED
 router.get('/allItems', closetController.getAllItems);

@@ -35,15 +35,39 @@ const addItem = async (req, res) => {
 };
 
 // Update an item
+// const updateItem = async (req, res) => {
+//     try {
+//         const updatedItem = await item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+//         if (!updatedItem) {
+//             return res.status(404).send('Item not found');
+//         }
+//         res.status(200).json(updatedItem);
+//     } catch (error) {
+//         res.status(500).send(error.message);
+//     }
+// };
+
 const updateItem = async (req, res) => {
     try {
-        const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedItem = await item.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedItem) {
             return res.status(404).send('Item not found');
         }
+
         res.status(200).json(updatedItem);
     } catch (error) {
-        res.status(500).send(error.message);
+        // Check for validation errors or other types of mongoose errors
+        if (error.name === 'ValidationError') {
+            return res.status(400).send(error.message);
+        }
+
+        // Handling CastError, for example if the ID format is not correct
+        if (error.name === 'CastError') {
+            return res.status(400).send('Invalid ID format');
+        }
+
+        // For other types of errors, send a generic server error message
+        res.status(500).send('Internal Server Error');
     }
 };
 

@@ -9,9 +9,13 @@ router.get('/:id', itemController.getItem); //NEED TO TEST - working jan 25, 7:3
 
 router.post('/item', itemController.addItem); //NOT NEEDED
 
+
 router.put('/updateItem/:id', itemController.updateItem); //NEED TO TEST - working jan 25, 7:38 PM
 
-router.delete('/deleteItem/:id', itemController.deleteItem) //NOT NEEDED
+router.post('/item', itemController.addItem);
+
+//check this route
+router.delete('/deleteItem/:id', itemController.deleteItem)
 
 export default router;
 

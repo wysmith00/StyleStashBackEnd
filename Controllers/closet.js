@@ -22,7 +22,7 @@ const createCloset = async (req, res) => {
 
 const getCloset = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.params.closetId);//changed to req.params.closetid, instead of "id"
+        const closet = await Closet.findById(req.params.closetId);
         res.status(200).json(closet);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -52,7 +52,7 @@ const getClosetCategory = async (req, res) => {
 // Get an item from closet by category
 const getItemsByCategory = async (req, res) => {
     try {
-        const closetId = req.body.closetId;
+        const closetId = req.params.closetId;
         const category = req.params.category;
 
         // Log the received parameters
@@ -104,7 +104,7 @@ const getAllItems = async (req, res) => {
 // Add item to closet
 const addItem = async (req, res) => {
     try {
-        const newItem = new Item({ //capitalize "i" for item
+        const newItem = new Item({
             ...req.body,
             closet: req.body.closetId
         });
@@ -123,29 +123,25 @@ const addItem = async (req, res) => {
 };
 
 // Delete item from closet
-const deleteItem = async (req, res) => {
+const deleteItem = async (req, res) => { 
     try {
         const itemId = req.params.itemId;
-
-        const itemToDelete = await Item.findById(itemId); 
+        const itemToDelete = await Item.findById(itemId);
         if (!itemToDelete) {
             return res.status(404).send('Item not found');
         }
-
         // Use deleteOne instead of remove
         await Item.deleteOne({ _id: itemId });
-
         const closet = await Closet.findById(itemToDelete.closet);
         if (closet) {
             closet.items = closet.items.filter(id => id.toString() !== itemId);
             await closet.save();
         }
-
         res.status(200).send(`Item with ID ${itemId} deleted successfully`);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
+export default { createCloset, getCloset, getClosetCategory, getAllItems, addItem, getItemsByCategory, deleteItem };
 
-export default { createCloset, getCloset, getClosetCategory, getItemsByCategory, getAllItems, addItem, deleteItem };
