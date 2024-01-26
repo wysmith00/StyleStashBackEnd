@@ -13,6 +13,6 @@ router.get('/getUser/:id', getUser)
 //router.put('/updateUser/:id', updateUser)
 //delete user route 
 
-router.delete('/deleteUser/:id', deleteUser)
+router.delete('/deleteUser/:id', deleteUser) 
 
 export default router
