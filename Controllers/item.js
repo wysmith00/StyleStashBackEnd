@@ -1,6 +1,5 @@
 import Item from "../Models/item.js";
 
-// Get all items
 const getAllItems = async (req, res) => {
     try {
         const items = await Item.find({});
@@ -10,7 +9,6 @@ const getAllItems = async (req, res) => {
     }
 };
 
-// Get an item by ID
 const getItem = async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
@@ -23,7 +21,6 @@ const getItem = async (req, res) => {
     }
 };
 
-// Add a new item
 const addItem = async (req, res) => {
     try {
         const newItem = new Item(req.body);
@@ -34,19 +31,6 @@ const addItem = async (req, res) => {
     }
 };
 
-// Update an item
-// const updateItem = async (req, res) => {
-//     try {
-//         const updatedItem = await item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-//         if (!updatedItem) {
-//             return res.status(404).send('Item not found');
-//         }
-//         res.status(200).json(updatedItem);
-//     } catch (error) {
-//         res.status(500).send(error.message);
-//     }
-// };
-
 const updateItem = async (req, res) => {
     try {
         const updatedItem = await item.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -56,22 +40,16 @@ const updateItem = async (req, res) => {
 
         res.status(200).json(updatedItem);
     } catch (error) {
-        // Check for validation errors or other types of mongoose errors
         if (error.name === 'ValidationError') {
             return res.status(400).send(error.message);
         }
-
-        // Handling CastError, for example if the ID format is not correct
         if (error.name === 'CastError') {
             return res.status(400).send('Invalid ID format');
         }
-
-        // For other types of errors, send a generic server error message
         res.status(500).send('Internal Server Error');
     }
 };
 
-// Delete an item
 const deleteItem = async (req, res) => {
     try {
         const item = await Item.findByIdAndDelete(req.params.id);

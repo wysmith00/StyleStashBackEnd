@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 import Profile from '../Models/profile.js'
 
-
-//GET
-
 const getProfile = async (req, res) => {
     try {
         const profiles = await Profile.findById(req.params.id);
@@ -12,11 +9,6 @@ const getProfile = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
-
-
-
-
-//PUT
 
 const updateProfile = async (req, res) => {
     const { id: _id } = req.params;

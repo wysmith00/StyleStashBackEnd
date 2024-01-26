@@ -1,8 +1,6 @@
 import Closet from '../Models/closet.js';
-import Item from '../Models/item.js'; // Capitalized 'Item'
+import Item from '../Models/item.js'; 
 
-// Jan 23rd, 2024
-// Creating a new closet (assuming you have no items to begin with)
 const createCloset = async (req, res) => {
     let category = req.body.category;
     const closet = new Closet({
@@ -18,8 +16,6 @@ const createCloset = async (req, res) => {
     }
 };
 
-// Get a user's closet
-
 const getCloset = async (req, res) => {
     try {
         const closet = await Closet.findById(req.params.closetId);
@@ -29,7 +25,6 @@ const getCloset = async (req, res) => {
     }
 };
 
-// Get a user's closet by category
 const getClosetCategory = async (req, res) => {
     try {
         const category = req.params.category;
@@ -49,29 +44,24 @@ const getClosetCategory = async (req, res) => {
     }
 };
 
-// Get an item from closet by category
 const getItemsByCategory = async (req, res) => {
     try {
         const closetId = req.params.closetId;
         const category = req.params.category;
 
-        // Log the received parameters
         console.log("Received Closet ID:", closetId);
         console.log("Received Category:", category);
 
-        // Validate the category
         const validCategories = ['outerwear', 'footwear', 'clothing', 'accessories'];
         if (!validCategories.includes(category.toLowerCase())) {
             return res.status(400).send('Invalid category');
         }
 
-        // Fetch the closet
         const closet = await Closet.findById(closetId).populate({
             path: 'items',
             match: { category: category }
         });
 
-        // Log the fetched closet
         console.log("Fetched Closet:", closet);
 
         if (!closet) {
@@ -84,14 +74,11 @@ const getItemsByCategory = async (req, res) => {
 
         res.status(200).json(closet.items);
     } catch (error) {
-        console.log("Error:", error.message); // Log the error message
+        console.log("Error:", error.message); 
         res.status(500).send(error.message);
     }
 };
 
-// Functionality for items 
-
-// Get all items from closet
 const getAllItems = async (req, res) => {
     try {
         const items = await Item.find({}); 
@@ -101,7 +88,6 @@ const getAllItems = async (req, res) => {
     }
 };
 
-// Add item to closet
 const addItem = async (req, res) => {
     try {
         const newItem = new Item({
@@ -122,7 +108,6 @@ const addItem = async (req, res) => {
     }
 };
 
-// Delete item from closet
 const deleteItem = async (req, res) => { 
     try {
         const itemId = req.params.itemId;
@@ -130,7 +115,6 @@ const deleteItem = async (req, res) => {
         if (!itemToDelete) {
             return res.status(404).send('Item not found');
         }
-        // Use deleteOne instead of remove
         await Item.deleteOne({ _id: itemId });
         const closet = await Closet.findById(itemToDelete.closet);
         if (closet) {

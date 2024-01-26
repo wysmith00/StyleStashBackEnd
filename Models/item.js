@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
-
 const itemSchema = new Schema({
 
     closet: {
@@ -19,7 +18,11 @@ const itemSchema = new Schema({
     brand: { type: String },
     wearCount: {type: String,
                 enum: ['often', 'rarely', 'special occasion']},
-    notes: {type: String}
+    notes: {type: String},
+    imageUrl: {
+        type: String,
+        required: true
+    }
 });
 
 const Item = mongoose.model('Item', itemSchema);
