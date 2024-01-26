@@ -1,19 +1,21 @@
 import express from "express";
 const router = express.Router();
-// import { getItem, addItem, updateItem, deleteItem } from '../Controllers/item.js';
 import itemController from '../Controllers/item.js'
+import { decodeUserFromToken, checkAuth } from "../Middleware/auth.js";
 
-router.get('/', itemController.getAllItems);
-router.get('/:id', itemController.getItem);
+router.get('/', decodeUserFromToken, checkAuth, itemController.getAllItems); 
+
+router.get('/:id', decodeUserFromToken, checkAuth, itemController.getItem); 
+
+router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem); 
 
 
-router.post('/item', itemController.addItem);
+router.put('/updateItem/:id', decodeUserFromToken, checkAuth, itemController.updateItem);
 
-//check this route
-router.patch('/updateItem/:id', itemController.updateItem);
+router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem);
 
-//check this route
-router.delete('/deleteItem/:id', itemController.deleteItem)
-
+router.delete('/deleteItem/:id', decodeUserFromToken, checkAuth, itemController.deleteItem)
 
 export default router;
+
+

@@ -1,20 +1,23 @@
 import express from 'express';
 
 import closetController from '../Controllers/closet.js';
+import { decodeUserFromToken, checkAuth } from '../Middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/:id', closetController.getCloset);
-router.post('/addCloset', closetController.createCloset);
-// shouldnt be needed
-router.get('/category', closetController.getClosetCategory);
+router.post('/', decodeUserFromToken, checkAuth, closetController.createCloset);
 
-// check route below
-router.get('/allItems', closetController.getAllItems);
-// functioning route
-router.post('/:closetId/addItem', closetController.addItem);
-//functioning route
-router.get('/:closetId/:category', closetController.getItemsByCategory);
+router.get('/:closetId', decodeUserFromToken, checkAuth, closetController.getCloset);
+
+router.get('/category', decodeUserFromToken, checkAuth, closetController.getClosetCategory);
+
+router.get('/:closetId/:category', decodeUserFromToken, checkAuth, closetController.getItemsByCategory);
+
+router.get('/allItems', decodeUserFromToken, checkAuth, closetController.getAllItems);
+
+router.post('/:closetId/addItem', decodeUserFromToken, checkAuth, closetController.addItem);
+
+router.delete('/deleteItem/:itemId', decodeUserFromToken, checkAuth, closetController.deleteItem)
 
 export default router;
 

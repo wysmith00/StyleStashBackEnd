@@ -20,7 +20,6 @@ const decodeUserFromToken = (req, res, next) => {
 }
 
 function checkAuth(req, res, next) {
-    // if there is a user object on the request, the token was decoded properly and we can continue with the request to the protected route
     return req.user ? next() : res.status(401).json({ msg: 'Not Authorized' })
   }
 

@@ -1,9 +1,7 @@
 import jwt from 'jsonwebtoken'
-
 import User from '../Models/user.js'
 import Profile  from '../Models/profile.js'
 import Closet from '../Models/closet.js'
-
 
 function createJWT(user) {
   return jwt.sign(
@@ -23,23 +21,22 @@ function signup(req, res) {
       } else if (!process.env.SECRET) {
         throw new Error('no SECRET in .env file');
       } else {
-        return Closet.create(req.body); // Create the closet and return the promise
+        return Closet.create(req.body); 
       }
     })
     .then(newCloset => {
-      req.body.closet = newCloset._id; // Assign the new closet ID
-      return Profile.create(req.body); // Create the profile and return the promise
+      req.body.closet = newCloset._id; 
+      return Profile.create(req.body);
     })
     .then(newProfile => {
       req.body.profile = newProfile._id;
-      return User.create(req.body); // Create the user and return the promise
+      return User.create(req.body); 
     })
     .then(user => {
       const token = createJWT(user);
-      res.status(200).json({ token }); // Send the response
+      res.status(200).json({ token }); 
     })
     .catch(err => {
-      // If an error occurs at any point in the chain, this block will handle it
       if (req.body.profile) {
         Profile.findByIdAndDelete(req.body.profile).catch(deleteErr => {
           console.error('Error deleting profile:', deleteErr);
@@ -48,7 +45,6 @@ function signup(req, res) {
       res.status(500).json({ err: err.message });
     });
 }
-
 
 function login(req, res) {
   User.findOne({ email: req.body.email })

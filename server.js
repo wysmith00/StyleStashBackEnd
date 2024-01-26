@@ -22,10 +22,6 @@ app.use(cors())
 app.use(express.json())
 
 // Your custom authentication middleware
-// Make sure it's after body parsing middleware and before your routes
-//app.use(decodeUserFromToken);
-
-//Use imported routes
 app.use('/StyleStash/closet', closetRouter);
 app.use('/StyleStash/items', itemRouter);
 app.use('/StyleStash/user', userRouter)
