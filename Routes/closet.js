@@ -16,6 +16,7 @@ router.post('/addItem', closetController.addItem);
 //functioning route
 router.get('/categroy/:category', closetController.getItemsByCategory);
 
+router.delete('/item/:itemId', closetController.deleteItem)
 export default router;
 
 

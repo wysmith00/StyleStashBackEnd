@@ -28,7 +28,7 @@ const createCloset = async (req, res) => {
 
 const getCloset = async (req, res) => {
     try {
-        const closet = await Closet.findById(req.params.id)
+        const closet = await Closet.findById(req.params.closetId);
         res.status(200).json(closet);
     } catch (err) {
         // Handle potential errors
@@ -74,7 +74,7 @@ const getAllItems = async (req, res) => {
 
 const addItem = async (req, res) => {
     try {
-        const newItem = new item({
+        const newItem = new Item({
             ...req.body,
             closet: req.body.closetId 
         });
@@ -89,6 +89,27 @@ const addItem = async (req, res) => {
         await closet.save();
 
         res.status(201).json(newItem);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+// Delete item from closet
+const deleteItem = async (req, res) => {
+    try {
+        const itemId = req.params.itemId;
+        const itemToDelete = await Item.findById(itemId);
+        if (!itemToDelete) {
+            return res.status(404).send('Item not found');
+        }
+        // Use deleteOne instead of remove
+        await Item.deleteOne({ _id: itemId });
+        const closet = await Closet.findById(itemToDelete.closet);
+        if (closet) {
+            closet.items = closet.items.filter(id => id.toString() !== itemId);
+            await closet.save();
+        }
+        res.status(200).send(`Item with ID ${itemId} deleted successfully`);
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -134,4 +155,4 @@ const getItemsByCategory = async (req, res) => {
 };
 
 
-export default { createCloset, getCloset, getClosetCategory, getAllItems, addItem, getItemsByCategory};
+export default { createCloset, getCloset, getClosetCategory, getAllItems, addItem, getItemsByCategory, deleteItem };
