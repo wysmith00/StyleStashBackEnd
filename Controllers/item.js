@@ -11,7 +11,7 @@ const getAllItems = async (req, res) => {
 
 const getItem = async (req, res) => {
     try {
-        const item = await Item.findById(req.params.id);
+        const item = await Item.findById(req.params.itemId);
         if (!item) {
             return res.status(404).send('Item not found');
         }
@@ -33,7 +33,7 @@ const addItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
     try {
-        const updatedItem = await item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedItem = await Item.findByIdAndUpdate(req.params.itemId, req.body, { new: true });
         if (!updatedItem) {
             return res.status(404).send('Item not found');
         }
