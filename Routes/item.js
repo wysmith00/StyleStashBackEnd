@@ -5,12 +5,11 @@ import { decodeUserFromToken, checkAuth } from "../Middleware/auth.js";
 
 router.get('/', decodeUserFromToken, checkAuth, itemController.getAllItems); 
 
-router.get('/:id', decodeUserFromToken, checkAuth, itemController.getItem); 
+router.get('/:itemId', decodeUserFromToken, checkAuth, itemController.getItem); 
 
 router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem); 
 
-
-router.put('/updateItem/:id', decodeUserFromToken, checkAuth, itemController.updateItem);
+router.put('/updateItem/:itemId', decodeUserFromToken, checkAuth, itemController.updateItem);
 
 router.post('/item', decodeUserFromToken, checkAuth, itemController.addItem);
 

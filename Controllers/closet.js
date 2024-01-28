@@ -69,7 +69,11 @@ const getItemsByCategory = async (req, res) => {
         }
 
         if (!closet.items || closet.items.length === 0) {
-            return res.status(404).send('No items found in this category in the closet');
+            return res.status(200).json({
+                status: 'success',
+                message: 'No items found in this category',
+                data: []
+            });
         }
 
         res.status(200).json(closet.items);
